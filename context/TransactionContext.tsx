@@ -80,6 +80,7 @@ export interface SIPSchedule {
     familyGroupId: string;
     memberId: string;
     assetId: string;
+    assetName: string;
     sipName: string;
     frequency: 'Monthly' | 'Weekly';
     dayOfMonth?: number;
