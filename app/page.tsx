@@ -23,14 +23,7 @@ export default function Dashboard() {
     }
   }, [dbUser, user, selectedMemberId, setSelectedMemberId]);
 
-  // Prepare chart data - Accumulate value over time
-  // by grouping transactions by month and calculating cumulative investment value + mock gain.
-
-  // Actually, let's build a simple cumulative chart based on transaction dates.
-  // Enhanced Chart Data: Aggregate by Date, not just Month, and simulate current value growth
-  // In a real app, 'current value' would be snapshot at that time or fetched from historical pricing API.
-  // Here we will mock 'current value' as 'invested + random growth' for visualization purposes, 
-  // or better, linear interpolation between current gain/loss.
+  // Prepare chart data: Aggregate by Date and simulate current value growth based on current metrics.
 
   const chartData = useMemo(() => {
     // 1. Group by exact date first
@@ -64,12 +57,7 @@ export default function Dashboard() {
       const entry = dailyMap.get(date)!;
       runningInvested += entry.change;
 
-      // Mock Current Value: Invested + (Invested * (Mock Percent / 100))
-      // Let's assume a simplified linear growth to current metric totals for smoother graph
-      // This is purely aesthetic in this demo absence of historical navs.
-      // We will make 'current' slightly higher than 'invested' generally if profit, or lower if loss.
-      // Dynamic Mock: Current = Invested * (metrics.totalCurrentValue / metrics.totalInvested) (Ratio applied historically)
-      // This preserves the shape of investment but scales it to match current value.
+      // Dynamic Mock: Scale invested amount by the current portfolio ratio to simulate historical value
 
       const ratio = metrics.totalInvested > 0 ? metrics.totalCurrentValue / metrics.totalInvested : 1;
       const currentVal = runningInvested * ratio;
@@ -84,7 +72,6 @@ export default function Dashboard() {
     return history;
   }, [transactions, metrics.totalCurrentValue, metrics.totalInvested]);
 
-  // If chartData is empty, provide some placeholders
   // If chartData is empty, provide some placeholders
   if (chartData.length === 0) {
     chartData.push({ date: 'Start', invested: 0, current: 0 });

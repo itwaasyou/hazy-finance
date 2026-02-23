@@ -78,14 +78,16 @@ export interface SIPSummary {
 export interface SIPSchedule {
     id: string; // sipId
     familyGroupId: string;
-    memberId: string;
-    assetId: string;
+    memberId?: string;
+    assetId?: string;
     assetName: string;
-    sipName: string;
+    sipName?: string;
+    amount: number;
     frequency: 'Monthly' | 'Weekly';
     dayOfMonth?: number;
     startDate: string;
-    status: 'Active' | 'Paused' | 'Stopped';
+    status?: 'Active' | 'Paused' | 'Stopped';
+    active: boolean; // Adding for compatibility with existing code
     createdAt?: any;
 }
 
